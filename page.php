@@ -1,26 +1,22 @@
 <?php get_header(); ?>
-        <section class="main index-template">
+        <section class="main page-template">
             <div class="container">
                 <div class="row">
                     <div class="col-2-3 content-area">
-                        <h1>Blogroll</h1>
                         <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
                             <article>
                                 <?php if(has_post_thumbnail()): ?>
                                     <div class="featured-img">
-                                        <?php the_post_thumbnail('thumbnail'); ?>
+                                        <?php the_post_thumbnail(); ?>
                                     </div><!-- /.featured-img -->
                                 <?php endif; ?>
-                                <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-                                <div class="article-meta">
-                                    By: <?php the_author(); ?> | Category: <?php the_category(', '); ?> | <?php the_tags(); ?>
-                                </div><!-- /.article-meta -->
+                                <h1><?php the_title(); ?></h1>
                                 <div class="article-content">
-                                    <?php the_excerpt(); ?>
+                                    <?php the_content(); ?>
                                 </div><!-- /.article-content -->
                             </article>
+                            <?php wp_link_pages(); ?>
                         <?php endwhile; endif; ?>
-                        <?php rgc_pagination(); ?>
                     </div><!-- /.col-2-3.content-area -->
                     <div class="col-1-3 sidebar-area">
                         <?php get_sidebar(); ?>

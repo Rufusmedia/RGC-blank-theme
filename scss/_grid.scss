@@ -1,6 +1,10 @@
 // =========================
 // RGC SIMPLE FLEXBOX GRID SYSTEM BY JEROMY
 // =========================
+.container {
+	max-width: 1000px;
+	margin: auto;
+}
 
 .row {
 	display:flex;

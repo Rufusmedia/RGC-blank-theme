@@ -1,17 +1,3 @@
-/*!
-Theme Name: RGC Base Theme
-Author: Jeromy Condon
-Author URI: http://rustygeorge.com/
-Description: Blank starting template for new custom website projects.
-Version: 1.0
-*/
-
-@import'normalize';
-@import'grid';
-@import'base-layout';
-@import'testing-styles';
-
-
 /*
 |====================================================
 | TABLE OF CONTENTS
@@ -38,14 +24,27 @@ Version: 1.0
 | 1. OVERALL LAYOUT
 |====================================================
 */
-
+body {
+	background: #e9e9e9;
+	color: #37474F;
+}
 
 /*
 |====================================================
 | 2. HEADER STYLES
 |====================================================
 */
+header .container {
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #90A4AE;
+	color: #CFD8DC;
+}
 
+header img {
+	display:block;
+}
 
 /*
 |====================================================
@@ -53,12 +52,102 @@ Version: 1.0
 |====================================================
 */
 
+nav {
+	flex:1;
+}
+
+nav ul {
+	list-style:none;
+	margin: 0;
+	padding: 0;
+}
+
+nav > ul {
+	display:flex;
+	justify-content: flex-end;
+}
+
+nav > ul > li {
+	position: relative;
+}
+
+nav li > ul {
+	display:none;
+	position: absolute;
+	width: 250px;
+	padding-top: 1em;
+	margin-top: -1em;
+}
+
+nav li:hover > ul {
+	display:block;
+}
+
+nav li > ul li {
+	background: #CFD8DC;
+}
+
+nav ul ul a {
+	padding: 10px;
+}
+
+nav a {
+	display:block;
+	text-transform: uppercase;
+	padding: 15px;
+	transition: all .3s;
+}
+
+nav li:hover a {
+	background: #CFD8DC;
+}
+
+nav li:hover li a {
+	background: inherit;
+}
+
+nav li:hover li a:hover {
+	background: #fff;
+}
+
+.menu-item-has-children > a {
+	padding-right: 20px;
+}
+
+.menu-item-has-children > a:after {
+	content: '▾';
+	position: absolute;
+	right: 5px;
+	top:25%;
+	color: #0066cc;
+}
+
 
 /*
 |====================================================
 | 4. CONTENT AREA STYLES
 |====================================================
 */
+.content-area {
+	padding: 20px;
+	background: #fff;
+}
+
+article {
+	padding-bottom: 20px;
+	border-bottom: dashed 1px #dddddd;
+	margin-bottom: 30px;
+}
+
+article:last-child {
+	margin-bottom: 0;
+	border:none;
+}
+
+.article-meta {
+	margin-bottom: 1em;
+	color: #999;
+}
 
 
 /*
@@ -66,14 +155,20 @@ Version: 1.0
 | 5. SIDEBAR STYLES
 |====================================================
 */
-
+.sidebar-area {
+	padding: 20px;
+	background: #ECEFF1;
+}
 
 /*
 |====================================================
 | 6. FOOTER STYLES
 |====================================================
 */
-
+footer .container {
+	background: #90A4AE;
+	padding: 20px;
+}
 
 /*
 |====================================================
