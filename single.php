@@ -17,6 +17,10 @@
                                 <div class="article-content">
                                     <?php the_content(); ?>
                                 </div><!-- /.article-content -->
+                                <div class="article-pagination">
+                                    <span class="prev"><?php next_post_link( '%link', '&laquo Previous post' ); ?></span>
+                                    <span class="next"><?php previous_post_link( '%link', 'Next post &raquo;' ); ?> </span>
+                                </div><!-- /.article-pagination -->
                             </article>
                             <?php wp_link_pages(); ?>
                         <?php endwhile; endif; ?>
