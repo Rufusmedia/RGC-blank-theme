@@ -113,43 +113,104 @@ add_action('wp_dashboard_setup', 'disable_default_dashboard_widgets', 999);
 
 /*
 |====================================================
-| ADD CUSTOM DASHBOARD WIDGET
+| ADD CUSTOM DASHBOARD WIDGETS
 |====================================================
 */
+
+// SET DASHBOARD WIDGET COLS
+function RGC_dashboard_columns() {
+    add_screen_option(
+        'layout_columns',
+        array(
+            'max'     => 1,
+            'default' => 1
+        )
+    );
+}
+add_action( 'admin_head-index.php', 'RGC_dashboard_columns' );
+
+// STYLE THEM TO BE 100% WIDE
+add_action( 'admin_head-index.php', function()
+{
+    ?>
+<style>
+.postbox-container {
+    min-width: 100% !important;
+}
+.meta-box-sortables.ui-sortable.empty-container { 
+    display: none;
+}
+</style>
+    <?php
+});
+
+// ADD THE WIDGETS
 add_action( 'wp_dashboard_setup', 'register_rgc_dashboard_widget' );
 function register_rgc_dashboard_widget() {
 	wp_add_dashboard_widget(
 		'rgc_dashboard_widget',
-		'Rusty George Creative Dashboard Widget',
+		'Helpful Links &amp; Resources',
 		'rgc_dashboard_widget_display'
 	);
-	// wp_add_dashboard_widget(
-	// 	'cat_dashboard_widget',
-	// 	'Random Animated Cat Dashboard Widget',
-	// 	'cat_dashboard_widget_display'
-	// );
+	wp_add_dashboard_widget(
+		'video_dashboard_widget',
+		'Helpful WordPress Tutorials',
+		'video_dashboard_widget_display'
+	);
 }
 
 function rgc_dashboard_widget_display() {
     ?>
-    <h2>Helpful WordPress Links</h2>
+    <h2>Rusty George Creative Resources</h2>
+    <p>
+	    <strong>Telephone:</strong> <a href="tel:253.284.2140">253.284.2140</a><br>
+	    <strong>Email:</strong> <a href="mailto:info@rustygeorge.com">info@rustygeorge.com</a><br>
+	    <strong>Social Media:</strong> <a href="https://www.facebook.com/rustygeorgecreative">Facebook</a> | <a href="https://twitter.com/RustyGCreative">Twitter</a> | <a href="http://www.linkedin.com/company/rusty-george-creative">LinkedIn</a><br>
+	    <strong>Address:</strong> <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Rusty+George+Creative,+Broadway,+Tacoma,+WA&aq=0&oq=rusty+george&sll=47.286682,-120.882568&sspn=7.900565,16.644287&vpsrc=6&ie=UTF8&hq=Rusty+George+Creative,+Broadway,+Tacoma,+WA&hnear=&radius=15000&ll=47.256456,-122.444601&spn=0.0621,0.122824&t=m&z=14&iwloc=A&cid=6315586833550468535">732 Broadway, Ste. 302 Tacoma, Washington 98402</a>
+    </p>
+    <h2>WordPress Resources</h2>
     <ul>
-    	<li><a href="#needs-link">WP Resources</a></li>
-    	<li><a href="#needs-link">WP Resources</a></li>
-    </ul>
-
-    <h2>RGC Links</h2>
-    <ul>
-    	<li><a href="#needs-link">RGC Resources</a></li>
-    	<li><a href="#needs-link">RGC Resources</a></li>
+    	<li><a href="https://codex.wordpress.org/Main_Page" target="_blank">WordPress Instruction Manual (codex)</a></li>
     </ul>
     <?php
 }
 
-function cat_dashboard_widget_display() {
+function video_dashboard_widget_display() {
     ?>
-    <h2>Random Animated Cat</h2>
-    <a href="http://thecatapi.com"><img src="http://thecatapi.com/api/images/get?format=src&type=gif"></a>
+    <div style="display: flex; flex-wrap:wrap; justify-content: space-between;">
+    	<div style="width: 550px; margin-bottom: 30px;">
+			<h2>WordPress Dashboard Intro</h2>
+    		<iframe style="width:100%; min-height: 400px;" src="https://www.youtube.com/embed/Rlqm2mFaAIU?list=PLfOXCtnURNbZjLUyU_Isp39VdAjqEctNw" frameborder="0" allowfullscreen></iframe>
+    	</div>
+    	<div style="width: 550px; margin-bottom: 30px;">
+    		<h2>Using the WordPress Editor</h2>
+    		<iframe style="width:100%; min-height: 400px;" src="https://www.youtube.com/embed/1camxmrqVWg?list=PLfOXCtnURNbZjLUyU_Isp39VdAjqEctNw" frameborder="0" allowfullscreen></iframe>
+    	</div>
+    	<div style="width: 550px; margin-bottom: 30px;">
+			<h2>Posts vs. Pages</h2>
+    		<iframe style="width:100%; min-height: 400px;" src="https://www.youtube.com/embed/ac6t3jKKdWY?list=PLfOXCtnURNbZjLUyU_Isp39VdAjqEctNw" frameborder="0" allowfullscreen></iframe>
+    	</div>
+    	<div style="width: 550px; margin-bottom: 30px;">
+			<h2>Working With Posts</h2>
+    		<iframe style="width:100%; min-height: 400px;" src="https://www.youtube.com/embed/GIjJnqk7mBQ?list=PLfOXCtnURNbZjLUyU_Isp39VdAjqEctNw" frameborder="0" allowfullscreen></iframe>
+    	</div>
+    	<div style="width: 550px; margin-bottom: 30px;">
+    		<h2>Working with Pages</h2>
+    		<iframe style="width:100%; min-height: 400px;" src="https://www.youtube.com/embed/69TKDhFd1wM?list=PLfOXCtnURNbZjLUyU_Isp39VdAjqEctNw" frameborder="0" allowfullscreen></iframe>
+    	</div>
+    	<div style="width: 550px; margin-bottom: 30px;">
+			<h2>Working with Media</h2>
+    		<iframe style="width:100%; min-height: 400px;" src="https://www.youtube.com/embed/rnh1g7sYU4k?list=PLfOXCtnURNbZjLUyU_Isp39VdAjqEctNw" frameborder="0" allowfullscreen></iframe>
+    	</div>
+    	<div style="width: 550px; margin-bottom: 30px;">
+			<h2>Working with Menus</h2>
+    		<iframe style="width:100%; min-height: 400px;" src="https://www.youtube.com/embed/w1oNeH-V_cc?list=PLfOXCtnURNbZjLUyU_Isp39VdAjqEctNw" frameborder="0" allowfullscreen></iframe>
+    	</div>
+    	<div style="width: 550px; margin-bottom: 30px;">
+			<h2>Working with Users</h2>
+    		<iframe style="width:100%; min-height: 400px;" src="https://www.youtube.com/embed/TUUBIwcpND0?list=PLfOXCtnURNbZjLUyU_Isp39VdAjqEctNw" frameborder="0" allowfullscreen></iframe>
+    	</div>
+    </div>
     <?php
 }
 
