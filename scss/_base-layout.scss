@@ -4,6 +4,21 @@
 |====================================================
 */
 
+
+
+/*
+|====================================================
+| FUNCTIONS AND OTHER SASSY STUFFS
+|====================================================
+*/
+$browser-context: 16; // Default
+
+
+// converts pixel values to em values
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
+
 /*
 |====================================================
 | OVERALL LAYOUT DEFAULTS

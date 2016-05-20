@@ -6,6 +6,43 @@
 */
 
 /*
+| ===================================================
+| REMOVE UNWANTED ADMIN LINKS
+| ===================================================
+*/
+add_action( 'admin_bar_menu', 'rgc_remove_customizer', 999 );
+function rgc_remove_customizer( $wp_admin_bar ) {
+    $wp_admin_bar->remove_menu( 'customize' );
+}
+
+add_action('admin_init', 'rgc_remove_submenu', 102);
+function rgc_remove_submenu()
+{
+	global $submenu;
+	unset($submenu['themes.php'][6]); // remove customize link
+	remove_submenu_page( 'themes.php', 'theme-editor.php' );
+	remove_submenu_page( 'themes.php', 'theme-editor.php' );
+	remove_submenu_page('plugins.php', 'plugin-editor.php' );
+}
+
+function rgc_remove_menus(){
+  
+  remove_menu_page( 'index.php' );                  //Dashboard
+  remove_menu_page( 'jetpack' );                    //Jetpack* 
+  //remove_menu_page( 'edit.php' );                   //Posts
+  //remove_menu_page( 'upload.php' );                 //Media
+  //remove_menu_page( 'edit.php?post_type=page' );    //Pages
+  remove_menu_page( 'edit-comments.php' );          //Comments
+  //remove_menu_page( 'themes.php' );                 //Appearance
+  //remove_menu_page( 'plugins.php' );                //Plugins
+  //remove_menu_page( 'users.php' );                  //Users
+  //remove_menu_page( 'tools.php' );                  //Tools
+  //remove_menu_page( 'options-general.php' );        //Settings
+  
+}
+add_action( 'admin_menu', 'rgc_remove_menus' );
+
+/*
 |====================================================
 | WIDGETIZED SIDEBAR SUPPORT
 |====================================================
@@ -56,18 +93,65 @@ remove_action('wp_head', 'adjacent_posts_rel_link', 10, 0);
 |====================================================
 */
 function disable_default_dashboard_widgets() {
-
-	//COMMENT AND UN-COMMENT AS NEEDED TO CUSTOMIZE.
-	//remove_meta_box('dashboard_right_now', 'dashboard', 'core');
-	remove_meta_box('dashboard_recent_comments', 'dashboard', 'core');
-	remove_meta_box('dashboard_incoming_links', 'dashboard', 'core');
-	remove_meta_box('dashboard_plugins', 'dashboard', 'core');
-	remove_meta_box('dashboard_quick_press', 'dashboard', 'core');
-	remove_meta_box('dashboard_recent_drafts', 'dashboard', 'core');
-	remove_meta_box('dashboard_primary', 'dashboard', 'core');
-	remove_meta_box('dashboard_secondary', 'dashboard', 'core');
+	global $wp_meta_boxes;
+	// wp..
+	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity']);
+	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_right_now']);
+	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_recent_comments']);
+	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);
+	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins']);
+	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
+	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);
+	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']);
+	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']);
+	// yoast seo
+	unset($wp_meta_boxes['dashboard']['normal']['core']['yoast_db_widget']);
+	// gravity forms
+	unset($wp_meta_boxes['dashboard']['normal']['core']['rg_forms_dashboard']);
 }
-add_action('admin_menu', 'disable_default_dashboard_widgets');
+add_action('wp_dashboard_setup', 'disable_default_dashboard_widgets', 999);
+
+/*
+|====================================================
+| ADD CUSTOM DASHBOARD WIDGET
+|====================================================
+*/
+add_action( 'wp_dashboard_setup', 'register_rgc_dashboard_widget' );
+function register_rgc_dashboard_widget() {
+	wp_add_dashboard_widget(
+		'rgc_dashboard_widget',
+		'Rusty George Creative Dashboard Widget',
+		'rgc_dashboard_widget_display'
+	);
+	// wp_add_dashboard_widget(
+	// 	'cat_dashboard_widget',
+	// 	'Random Animated Cat Dashboard Widget',
+	// 	'cat_dashboard_widget_display'
+	// );
+}
+
+function rgc_dashboard_widget_display() {
+    ?>
+    <h2>Helpful WordPress Links</h2>
+    <ul>
+    	<li><a href="#needs-link">WP Resources</a></li>
+    	<li><a href="#needs-link">WP Resources</a></li>
+    </ul>
+
+    <h2>RGC Links</h2>
+    <ul>
+    	<li><a href="#needs-link">RGC Resources</a></li>
+    	<li><a href="#needs-link">RGC Resources</a></li>
+    </ul>
+    <?php
+}
+
+function cat_dashboard_widget_display() {
+    ?>
+    <h2>Random Animated Cat</h2>
+    <a href="http://thecatapi.com"><img src="http://thecatapi.com/api/images/get?format=src&type=gif"></a>
+    <?php
+}
 
 /*
 |====================================================
@@ -210,3 +294,49 @@ function custom_login_logo() {
 	echo '<style type="text/css">h1 a { background: url('.get_bloginfo('template_directory').'/assets/logo-login.png) 50% 50% no-repeat !important; }</style>';
 }
 add_action('login_head', 'custom_login_logo');
+
+/*
+|====================================================
+| INCLUDE ACF PRO IN THEME
+|====================================================
+*/
+// 1. customize ACF path
+add_filter('acf/settings/path', 'my_acf_settings_path');
+ 
+function my_acf_settings_path( $path ) {
+    $path = get_stylesheet_directory() . '/assets/plugins/acf/';
+    return $path;
+}
+
+// 2. customize ACF dir
+add_filter('acf/settings/dir', 'my_acf_settings_dir');
+ 
+function my_acf_settings_dir( $dir ) {
+    $dir = get_stylesheet_directory_uri() . '/assets/plugins/acf/';
+    return $dir; 
+}
+ 
+// 3. Hide ACF field group menu item
+add_filter('acf/settings/show_admin', '__return_false');
+
+// 4. Include ACF
+include_once( get_stylesheet_directory() . '/assets/plugins/acf/acf.php' );
+
+// 5 Load default fields
+include_once('assets/inc/jc-acf-fields.php');
+
+/*
+|====================================================
+| ADD THEME OPTIONS PAGE
+|====================================================
+*/
+if( function_exists('acf_add_options_page') ) {
+	
+	acf_add_options_page(array(
+		'page_title' 	=> 'Theme General Settings',
+		'menu_title'	=> 'Theme Settings',
+		'menu_slug' 	=> 'theme-general-settings',
+		'capability'	=> 'edit_posts',
+		'redirect'		=> false
+	));
+}
