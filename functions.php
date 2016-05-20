@@ -16,8 +16,7 @@ function rgc_remove_customizer( $wp_admin_bar ) {
 }
 
 add_action('admin_init', 'rgc_remove_submenu', 102);
-function rgc_remove_submenu()
-{
+function rgc_remove_submenu(){
 	global $submenu;
 	unset($submenu['themes.php'][6]); // remove customize link
 	remove_submenu_page( 'themes.php', 'theme-editor.php' );
@@ -26,8 +25,7 @@ function rgc_remove_submenu()
 }
 
 function rgc_remove_menus(){
-  
-  remove_menu_page( 'index.php' );                  //Dashboard
+  //remove_menu_page( 'index.php' );                  //Dashboard
   remove_menu_page( 'jetpack' );                    //Jetpack* 
   //remove_menu_page( 'edit.php' );                   //Posts
   //remove_menu_page( 'upload.php' );                 //Media
@@ -36,9 +34,8 @@ function rgc_remove_menus(){
   //remove_menu_page( 'themes.php' );                 //Appearance
   //remove_menu_page( 'plugins.php' );                //Plugins
   //remove_menu_page( 'users.php' );                  //Users
-  //remove_menu_page( 'tools.php' );                  //Tools
+  remove_menu_page( 'tools.php' );                  //Tools
   //remove_menu_page( 'options-general.php' );        //Settings
-  
 }
 add_action( 'admin_menu', 'rgc_remove_menus' );
 
@@ -62,7 +59,6 @@ if (function_exists('register_sidebar')) {
 | ADDS SUPPORT FOR WORDPRESS CUSTOM MENUS
 | ===================================================
 */
-
 function register_my_menus() {
 	register_nav_menus(
 		array(
@@ -116,7 +112,6 @@ add_action('wp_dashboard_setup', 'disable_default_dashboard_widgets', 999);
 | ADD CUSTOM DASHBOARD WIDGETS
 |====================================================
 */
-
 // SET DASHBOARD WIDGET COLS
 function RGC_dashboard_columns() {
     add_screen_option(
@@ -130,17 +125,16 @@ function RGC_dashboard_columns() {
 add_action( 'admin_head-index.php', 'RGC_dashboard_columns' );
 
 // STYLE THEM TO BE 100% WIDE
-add_action( 'admin_head-index.php', function()
-{
+add_action( 'admin_head-index.php', function(){
     ?>
-<style>
-.postbox-container {
-    min-width: 100% !important;
-}
-.meta-box-sortables.ui-sortable.empty-container { 
-    display: none;
-}
-</style>
+	<style>
+		.postbox-container {
+		    min-width: 100% !important;
+		}
+		.meta-box-sortables.ui-sortable.empty-container { 
+		    display: none;
+		}
+	</style>
     <?php
 });
 
@@ -260,7 +254,7 @@ function custom_excerpt_length( $length ) {
 add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 
 function new_excerpt_more($more) {
-       global $post;
+    global $post;
 	return '&hellip;<br><a class="readmore-link" href="'. get_permalink($post->ID) . '">Continue Reading</a>';
 }
 add_filter('excerpt_more', 'new_excerpt_more');
@@ -271,8 +265,7 @@ add_filter('excerpt_more', 'new_excerpt_more');
 |====================================================
 */
 
-function rgc_pagination($pages = '', $range = 2)
-{  
+function rgc_pagination($pages = '', $range = 2){  
   $showitems = ($range * 1)+1;  
   global $paged;
   if(empty($paged)) $paged = 1;
