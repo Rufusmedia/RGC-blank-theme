@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-        <section class="main index-template">
+        <section class="main archive-template">
             <div class="container">
                 <div class="row">
                     <div class="col-2-3 content-area">

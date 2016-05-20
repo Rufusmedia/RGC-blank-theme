@@ -159,3 +159,54 @@ function rgc_pagination($pages = '', $range = 2)
 	echo "</div>\n";
   }
 }
+
+/*
+|====================================================
+| MINIFY ADMIN BAR
+|====================================================
+*/
+add_action('get_header', 'my_filter_head');
+function my_filter_head() { remove_action('wp_head', '_admin_bar_bump_cb'); }
+function my_admin_css() {
+        if ( is_user_logged_in() ) {
+        ?>
+        <style type="text/css">
+            #wpadminbar {
+                width: 47px;
+                min-width: 47px;
+                overflow: hidden;
+                -webkit-transition: .2s width;
+                -webkit-transition-delay: 0s;
+                -moz-transition: .2s width;
+                -moz-transition-delay: 0s;
+                -o-transition: .2s width;
+                -o-transition-delay: 0s;
+                -ms-transition: .2s width;
+                -ms-transition-delay: 0s;
+                transition: .2s width;
+                transition-delay: 0s;
+            }
+            
+            #wpadminbar:hover {
+                width: 100%;
+                overflow: visible;
+                -webkit-transition-delay: 0;
+                -moz-transition-delay: 0;
+                -o-transition-delay: 0;
+                -ms-transition-delay: 0;
+                transition-delay: 0;
+            }
+        </style>
+        <?php }
+}
+add_action('wp_head', 'my_admin_css');
+
+/*
+|====================================================
+| CUSTOM LOGIN LOGO
+|====================================================
+*/
+function custom_login_logo() {
+	echo '<style type="text/css">h1 a { background: url('.get_bloginfo('template_directory').'/assets/logo-login.png) 50% 50% no-repeat !important; }</style>';
+}
+add_action('login_head', 'custom_login_logo');
