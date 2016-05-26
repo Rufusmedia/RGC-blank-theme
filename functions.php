@@ -284,7 +284,7 @@ add_theme_support( 'post-thumbnails' );
 function rm_ready_scripts() {
 	wp_enqueue_script(
 		'rm_javascript',
-		get_template_directory_uri() . '/js/scripts.js',
+		get_template_directory_uri() . '/js/scripts.min.js',
 		array('jquery'),
 		'1.0',
 		true
