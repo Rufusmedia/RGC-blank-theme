@@ -14,13 +14,11 @@ var gulp = require('gulp'),
 gulp.task('styles', function() {
   return sass('scss/style.scss', { style: 'compressed' })
     .pipe(autoprefixer('last 2 version'))
-    //.pipe(rename({suffix: '.min'}))
     .pipe(cssnano())
     .pipe(gulp.dest('./'))
     .pipe(notify({ message: 'Styles task complete' }))
     .pipe(livereload());
 });
-
 gulp.task('scripts', function() {
   return gulp.src('js/scripts.js')
     .pipe(rename({suffix: '.min'}))
@@ -29,14 +27,12 @@ gulp.task('scripts', function() {
     .pipe(notify({ message: 'Scripts task complete' }))
     .pipe(livereload());
 });
-
 gulp.task('images', function() {
-  return gulp.src('assets/*')
-    .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
+  return gulp.src('assets/*.+(png|jpg|gif|svg)')
+    .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
     .pipe(gulp.dest('assets/'))
     .pipe(notify({ message: 'Images task complete' }));
 });
-
 //default task
 gulp.task('default', function() {
     gulp.start('styles', 'images');
@@ -48,9 +44,8 @@ gulp.task('watch', function() {
   livereload.listen();
   // Watch .scss files
   gulp.watch('scss/*.scss', ['styles']);
-  // Watch .js files
+  // Watch scripts.js file
   gulp.watch('js/scripts.js', ['scripts']);
   // watch .php files and reload on change
   gulp.watch(['./*.php']).on('change', livereload.changed);
-  //gulp.watch('assets/*', ['images']);
 });
