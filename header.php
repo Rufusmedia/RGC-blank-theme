@@ -18,7 +18,10 @@
         <header>
             <div class="container">
                 <div class="logo">
-                    <a href="<?php bloginfo('url') ?>/"><img src="http://placehold.it/100x50" alt=""></a>
+                    <?php 
+                        $theme_logo = get_field('theme_logo', 'options');
+                    ?>
+                    <a href="<?php bloginfo('url') ?>/"><img src="<?php echo $theme_logo['url'] ?>" alt="Website Logo" width="80" height="80"></a>
                 </div><!-- /.logo -->
                 <nav>
                     <?php wp_nav_menu( array(

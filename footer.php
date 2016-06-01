@@ -1,6 +1,6 @@
         <footer>
             <div class="container">
-                <div>&copy; <?php echo date('Y'); ?> Rusty George Creative</div>
+                <div><?php the_field('copyright_text', 'options'); ?></div>
             </div><!-- /.container -->
         </footer>
         <?php wp_footer(); ?>

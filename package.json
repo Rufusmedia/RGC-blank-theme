@@ -3,11 +3,7 @@
   "version": "0.0.1",
   "homepage": "http://rustygeorge.com",
   "description": "Build scripts for WordPress websites",
-  "author": {
-    "name": "Jeromy Condon",
-    "email": "jeromy@rustygeorge.com",
-    "url": "http://rustygeorge.com"
-  },
+  "author": "Jeromy Condon <jeromy@rustygeorge.com> (http://rustygeorge.com)",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
@@ -19,5 +15,17 @@
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.0.6",
     "gulp-uglify": "^1.5.3"
+  },
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rufusmedia/RGC-blank-theme.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rufusmedia/RGC-blank-theme/issues"
   }
 }
