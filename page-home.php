@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+<?php get_template_part('_part-carousel'); ?>
         <section class="main page-template">
             <div class="container">
                 <div class="row">
