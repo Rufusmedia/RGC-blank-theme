@@ -116,6 +116,7 @@ h6 {
 a {
 	color: $accent;
 	text-decoration: none;
+	cursor: pointer;
 	transition: all .2s ease-in-out;
 }
 
@@ -128,6 +129,10 @@ a.button {
 	display: inline-block;
 	background: $accent;
 	color: $white;
+}
+
+a.button:hover {
+	background: darken($accent, 5);
 }
 
 ul, ol {
@@ -151,6 +156,16 @@ address {
 pre {
 	white-space: pre-wrap;
     word-wrap: break-word; 
+}
+
+.text-center {
+	text-align:center;
+}
+
+.css-col-text {
+	column-count: 2;
+	column-gap: 6em;
+	column-rule: solid $med 1px;
 }
 
 /*

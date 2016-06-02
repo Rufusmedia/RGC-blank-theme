@@ -24,8 +24,10 @@
 | 1. OVERALL LAYOUT
 |====================================================
 */
-body {
-	color: #555;
+section {
+	padding: 60px 0;
+	border-bottom: dashed 1px $med;
+	overflow:hidden;
 }
 
 /*
@@ -33,6 +35,9 @@ body {
 | 2. HEADER STYLES
 |====================================================
 */
+header {
+	background: $light;
+}
 header .container {
 	display:flex;
 	justify-content: space-between;
@@ -151,6 +156,50 @@ article:last-child {
 	color: #999;
 }
 
+.overlay-wrap {
+	position: relative;
+}
+
+.text-overlay {
+	background: rgba(255,255,255,.5);
+	position: absolute;
+	left:0;
+	top:0;
+	bottom: 0;
+	width: 40%;
+	display:flex;
+	flex-direction:column;
+	justify-content: center;
+}
+
+section.carousel {
+	padding: 0 0 30px 0;
+}
+
+.three-col .col-1-3 > div {
+	padding: 0 15px;
+}
+
+.three-col .row:first-child {
+	margin-bottom: 60px;
+}
+
+.three-col .col-1-3 p {
+	margin: 30px 0;
+}
+
+.three-col .col-1-1 p {
+	max-width: 800px;
+	margin:auto;
+}
+
+.image-text-overlay .text-overlay{
+	padding: 30px;
+}
+
+.acf-gallery .col-1-5 {
+	margin-bottom: 100px;
+}
 
 /*
 |====================================================
@@ -168,6 +217,14 @@ article:last-child {
 */
 footer .container {
 	padding: 20px;
+}
+
+.footer-socials {
+	text-align:right;
+}
+
+.footer-socials a {
+	margin-left: 15px;
 }
 
 /*
