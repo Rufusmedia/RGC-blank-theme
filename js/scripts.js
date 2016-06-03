@@ -27,6 +27,22 @@
       download: false,
       selector: "#lightgallery a"
     }); 
+
+    // grabs the nav elements from the DOM and puts them into a div to be displayed as a mobile menu
+	$nav = $('nav').html();
+	$('.overlay-nav-content').html($nav);
+	
+
+	// toggle nav overlay when menu button is clicked
+	$('.nav-toggle').on("click", function(){
+		$('body').addClass('open');
+	});
+	
+	$('.nav-overlay-toggle').on('click', function(){
+		if($('body').hasClass('open')) {
+			$('body').removeClass('open');
+		};
+	});
 });
 
 // enter konami code!

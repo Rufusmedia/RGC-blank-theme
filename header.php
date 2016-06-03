@@ -14,9 +14,13 @@
         <!--[if lte IE 9]>
             <div class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/?locale=en" target="_blank">upgrade your browser</a> to improve your experience.</div>
         <![endif]-->
-
+        <div class="overlay-nav-container">
+          <div class="nav-overlay-toggle"><img src="<?php bloginfo('template_directory') ?>/assets/close.svg" alt="" width="25" height="25"></div>
+          <div class="overlay-nav-content"></div>
+        </div><!-- /.overlay-nav-container -->
         <header>
             <div class="container">
+            <div class="nav-toggle"></div>
                 <div class="logo">
                     <?php 
                         $theme_logo = get_field('theme_logo', 'options');
