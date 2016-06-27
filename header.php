@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="<?php bloginfo('template_directory') ?>/style.css">
         <?php wp_head(); ?>
     </head>
-    <body>
+    <body <?php body_class(); ?>>
         <!--[if lte IE 9]>
             <div class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/?locale=en" target="_blank">upgrade your browser</a> to improve your experience.</div>
         <![endif]-->
