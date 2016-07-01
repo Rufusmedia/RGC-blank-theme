@@ -1,51 +1,59 @@
-//init scripts
-var gulp = require('gulp'),
-    sass = require('gulp-ruby-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cssnano = require('gulp-cssnano'),
-    imagemin = require('gulp-imagemin'),
-    rename = require('gulp-rename'),
-    notify = require('gulp-notify'),
-    cache = require('gulp-cache'),
-    uglify = require('gulp-uglify'),
-    livereload = require('gulp-livereload');
+require('es6-promise').polyfill();
 
-//begin tasks
-gulp.task('styles', function() {
-  return sass('scss/style.scss', { style: 'compressed' })
-    .pipe(autoprefixer('last 2 version'))
-    .pipe(cssnano())
-    .pipe(gulp.dest('./'))
-    .pipe(notify({ message: 'Styles task complete' }))
-    .pipe(livereload());
+var gulp          = require('gulp'),
+    sass          = require('gulp-sass'),
+    autoprefixer  = require('gulp-autoprefixer'),
+    plumber       = require('gulp-plumber'),
+    gutil         = require('gulp-util'),
+    rename        = require('gulp-rename'),
+    concat        = require('gulp-concat'),
+    jshint        = require('gulp-jshint'),
+    uglify        = require('gulp-uglify'),
+    imagemin      = require('gulp-imagemin'),
+    browserSync   = require('browser-sync').create(),
+    reload        = browserSync.reload;
+
+var onError = function( err ) {
+  console.log('An error occurred:', gutil.colors.magenta(err.message));
+  gutil.beep();
+  this.emit('end');
+};
+
+// Sass
+gulp.task('sass', function() {
+  return gulp.src('./scss/**/*.scss')
+  .pipe(plumber({ errorHandler: onError }))
+  .pipe(sass())
+  .pipe(autoprefixer())
+  .pipe(gulp.dest('./'))
 });
-gulp.task('scripts', function() {
-  return gulp.src('js/scripts.js')
-    .pipe(rename({suffix: '.min'}))
-    .pipe(uglify())
-    .pipe(gulp.dest('js/'))
-    .pipe(notify({ message: 'Scripts task complete' }))
-    .pipe(livereload());
+
+// JavaScript
+gulp.task('js', function() {
+  return gulp.src(['./js/*.js'])
+  .pipe(concat('app.js'))
+  .pipe(rename({suffix: '.min'}))
+  .pipe(uglify())
+  .pipe(gulp.dest('./js'))
 });
+
+// Images
 gulp.task('images', function() {
-  return gulp.src('assets/*.+(png|jpg|gif|svg)')
-    .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
-    .pipe(gulp.dest('assets/'))
-    .pipe(notify({ message: 'Images task complete' }));
-});
-//default task
-gulp.task('default', function() {
-    gulp.start('styles', 'images');
+  return gulp.src('./assets/src/*')
+  .pipe(plumber({ errorHandler: onError }))
+  .pipe(imagemin({ optimizationLevel: 7, progressive: true }))
+  .pipe(gulp.dest('./assets/dist'));
 });
 
-//watch file system for changes
+// Watch
 gulp.task('watch', function() {
-  // Create LiveReload server
-  livereload.listen();
-  // Watch .scss files
-  gulp.watch('scss/*.scss', ['styles']);
-  // Watch scripts.js file
-  gulp.watch('js/scripts.js', ['scripts']);
-  // watch .php files and reload on change
-  gulp.watch(['./*.php']).on('change', livereload.changed);
+  browserSync.init({
+    files: ['./**/*.php'],
+    proxy: 'http://localhost:8888/_blank/',
+  });
+  gulp.watch('./scss/**/*.scss', ['sass', reload]);
+  gulp.watch('./js/*.js', ['js', reload]);
+  gulp.watch('images/src/*', ['images', reload]);
 });
+
+gulp.task('default', ['sass', 'js', 'images', 'watch']);
