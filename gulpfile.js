@@ -1,5 +1,3 @@
-require('es6-promise').polyfill();
-
 var gulp          = require('gulp'),
     sass          = require('gulp-sass'),
     autoprefixer  = require('gulp-autoprefixer'),
@@ -23,7 +21,7 @@ var onError = function( err ) {
 gulp.task('sass', function() {
   return gulp.src('./scss/**/*.scss')
   .pipe(plumber({ errorHandler: onError }))
-  .pipe(sass())
+  .pipe(sass({outputStyle: 'compressed'}))
   .pipe(autoprefixer())
   .pipe(gulp.dest('./'))
 });
@@ -31,10 +29,11 @@ gulp.task('sass', function() {
 // JavaScript
 gulp.task('js', function() {
   return gulp.src(['./js/*.js'])
-  .pipe(concat('app.js'))
+  .pipe(plumber({ errorHandler: onError }))
+  .pipe(concat('scripts.js'))
   .pipe(rename({suffix: '.min'}))
   .pipe(uglify())
-  .pipe(gulp.dest('./js'))
+  .pipe(gulp.dest('./'))
 });
 
 // Images

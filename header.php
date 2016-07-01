@@ -6,7 +6,7 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link rel="shortcut icon" href="<?php bloginfo('template_directory') ?>/assets/favicon.png">
+        <link rel="shortcut icon" href="<?php bloginfo('template_directory') ?>/assets/dist/favicon.png">
         <link rel="stylesheet" href="<?php bloginfo('template_directory') ?>/style.css">
         <?php wp_head(); ?>
     </head>
